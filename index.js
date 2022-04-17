@@ -61,7 +61,28 @@ const addEngineer = [
         message: "Please enter the engineer's github username."
     },
 ]
-const addIntern = []
+const addIntern = [
+    {
+        type: 'input',
+        name: 'name',
+        message: "Please enter the engineer's name."
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: "Please enter the engineer's employee id."
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: "Please enter the engineer's email address."
+    },
+    {
+        type: 'input',
+        name: 'school',
+        message: "Please enter the name of your school."
+    },
+]
 
 function init () {
     inquirer
@@ -91,8 +112,13 @@ function newMember () {
                         newMember()
                     })
                 } else if (answers.addNext === 'Intern') {
-                    console.log('add intern prompts here');
-                    newMember()
+                    inquirer
+                    .prompt(addIntern)
+                    .then(answers => {
+                        const intern = new Intern(answers.name, answers.id, answers.email, answers.school)
+                        employees.push(intern)
+                        newMember()
+                    })
                 } else {
                     console.log('run function to generate html');
                     console.log(employees);
