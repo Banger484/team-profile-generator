@@ -1,4 +1,4 @@
-// Importing deppendencies
+// Importing dependencies
 const inquirer = require('inquirer')
 const fs = require('fs')
 
@@ -54,10 +54,23 @@ function newMember () {
                 newMember()
             })
         } else {
-            console.log('run function to generate html');
-            console.log(employees);
+            writeToFile('index2.html', JSON.stringify(employees))
         }
     })
+}
+
+function writeToFile(fileName, data) {
+    console.log(data);
+    fs.writeFile(fileName, htmlMagic(data), (err) => {
+        if(err) {
+            console.error(err);
+        }
+    })
+}
+
+function htmlMagic (data) {
+    const newData = JSON.parse(data)
+   return ` ${newData[0].name}`
 }
 
 // calling init to start the app
