@@ -54,22 +54,24 @@ function newMember () {
                 newMember()
             })
         } else {
+            
             writeToFile('dist/index.html', JSON.stringify(employees))
+            employees.forEach(employee => {
+                console.log(employee.getRole())
+            })
         }
     })
 }
 
-function writeToFile(fileName, data) {
-    console.log(data);
-    fs.writeFile(fileName, htmlMagic(data), (err) => {
+function writeToFile(fileName) {
+    fs.writeFile(fileName, htmlMagic(), (err) => {
         if(err) {
             console.error(err);
         }
     })
 }
 
-function htmlMagic (data) {
-    const newData = JSON.parse(data)
+function htmlMagic () {
    return `<!DOCTYPE html>
    <html lang="en">
    <head>
@@ -84,9 +86,41 @@ function htmlMagic (data) {
        <header>
             <h1>My Team</h1>
        </header>
+       <div id="card-holder">
+        ${cardMake()}
+       </div>
    </body>
    </html>`
 }
 
 // calling init to start the app
 init()
+
+function cardMake () {
+    const response = []
+    for(let i = 0; i < employees.length; i++){
+        console.log(`ran ${i} time`);
+        response.push(`<div class='card'>
+        <div class="card-top">
+                <h1 class="name">${employees[i].name}</h1>
+                <h1 class="role">${employees[i].getRole()}</h1>
+            </div>
+            <div class="card-bottom">
+                <h3 class="id">${employees[i].id}</h3>
+                <h3 class="email">${employees[i].email}</h3>
+                <h3 class="officeNumber">${dataCheck(employees[i].officeNumber)}</h3>
+                <h3 class="github">${dataCheck(employees[i].github)}</h3>
+                <h3 class="school">${dataCheck(employees[i].school)}</h3>
+            </div>
+        </div>
+        `)
+    }
+    return response
+}
+function dataCheck (data) {
+    if(data) {
+        return data
+    }else {
+        return ''
+    }
+}
