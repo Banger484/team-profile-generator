@@ -54,7 +54,7 @@ function newMember () {
                 newMember()
             })
         } else {
-            writeToFile('index2.html', JSON.stringify(employees))
+            writeToFile('dist/index.html', JSON.stringify(employees))
         }
     })
 }
@@ -70,7 +70,22 @@ function writeToFile(fileName, data) {
 
 function htmlMagic (data) {
     const newData = JSON.parse(data)
-   return ` ${newData[0].name}`
+   return `<!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>My Team</title>
+       <link rel="stylesheet" href="style.css">
+
+   </head>
+   <body>
+       <header>
+            <h1>My Team</h1>
+       </header>
+   </body>
+   </html>`
 }
 
 // calling init to start the app
