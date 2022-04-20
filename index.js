@@ -87,7 +87,7 @@ function htmlMagic () {
             <h1>My Team</h1>
        </header>
        <div id="card-holder">
-        ${cardMake()}
+       ${cardMake()}
        </div>
    </body>
    </html>`
@@ -96,31 +96,34 @@ function htmlMagic () {
 // calling init to start the app
 init()
 
+
 function cardMake () {
     const response = []
-    for(let i = 0; i < employees.length; i++){
-        console.log(`ran ${i} time`);
-        response.push(`<div class='card'>
+    for (let i = 0; i < employees.length; i++) {
+        response.push(`
+    <div class='card'>
         <div class="card-top">
-                <h1 class="name">${employees[i].name}</h1>
+                <h1 class="name">${employees[i].getName()}</h1>
                 <h1 class="role">${employees[i].getRole()}</h1>
             </div>
             <div class="card-bottom">
-                <h3 class="id">${employees[i].id}</h3>
-                <h3 class="email">${employees[i].email}</h3>
-                <h3 class="officeNumber">${dataCheck(employees[i].officeNumber)}</h3>
-                <h3 class="github">${dataCheck(employees[i].github)}</h3>
-                <h3 class="school">${dataCheck(employees[i].school)}</h3>
+                <h3 class="id">ID: ${employees[i].getId()}</h3>
+                <h3 class="email">Email: <a href = "mailto: ${employees[i].getEmail()}">${employees[i].getEmail()}</a></h3>
+                <h3 class="additional">${dataCheck(employees[i])}</h3>
             </div>
-        </div>
-        `)
+        </div>`)
+        
     }
-    return response
+    return response.join(' ')
 }
 function dataCheck (data) {
-    if(data) {
-        return data
-    }else {
+    if(data.officeNumber) {
+        return `Office Number: ${data.officeNumber}`
+    }else if(data.github) {
+        return `GitHub: <a href="http://github.com/${data.getGithub()}">${data.getGithub()}</a>`
+    } else if(data.school) {
+        return `School: ${data.getSchool()}`
+    } else {
         return ''
     }
 }
